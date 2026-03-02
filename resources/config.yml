@@ -1,30 +1,37 @@
+tpa-cooldown: 60
+
 messages:
+
   no-permission: "§cYou do not have permission."
+  player-not-found: "§cPlayer not found."
   usage: "§cUsage: {usage}"
 
   home-set: "§aHome set successfully."
   home-not-found: "§cHome not found."
   homes-list: "§eYour homes: {homes}"
+  seehomes-list: "§e{player}'s homes: {homes}"
 
   warp-set: "§aWarp created."
   warp-not-found: "§cWarp not found."
-  warp-list: "§eWarps: {warps}"
+  warp-list: "§eServer warps: {warps}"
 
-  spawn-set: "§aSpawn location set."
+  spawn-set: "§aSpawn set."
   spawn-teleport: "§aTeleported to spawn."
-
-  bedrock-success: "§aBedrock broken and added to inventory."
-  not-bedrock: "§cYou must be looking at bedrock."
 
   back-success: "§aTeleported to death location."
   no-death: "§cNo death location saved."
 
-  tp-sent: "§aTeleport request sent."
-  tp-received: "§eYou received a teleport request."
-  tp-accepted: "§aTeleport request accepted."
-  tp-denied: "§cTeleport request denied."
-  no-request: "§cNo teleport request found."
+  bedrock-success: "§aBedrock broken and added to inventory."
+  not-bedrock: "§cYou must be looking at bedrock."
 
   tpall-success: "§aAll players teleported."
+
+  tpa-sent: "§aTeleport request sent."
+  tpahere-sent: "§aTeleport-here request sent."
+  tpa-received: "§eYou received a teleport request."
+  tpa-accepted: "§aTeleport accepted."
+  tpa-denied: "§cTeleport denied."
+  no-request: "§cNo teleport request."
+  tpa-cooldown: "§cWait {time}s before sending another request."
 
   top-success: "§aTeleported to top."
