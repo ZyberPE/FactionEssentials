@@ -1,38 +1,61 @@
 name: FactionEssentials
 main: FactionEssentials\Main
-version: 1.0.0
+version: 1.1.0
 api: 5.0.0
-author: zyberpe
-description: Basic essentials system for faction servers.
+author: ZyberPE
 
 commands:
+  tpa:
+    permission: factionessentials.tpa
+  tpahere:
+    permission: factionessentials.tpahere
+  tpaccept:
+    permission: factionessentials.tpa
+  tpdeny:
+    permission: factionessentials.tpa
+  tpall:
+    permission: factionessentials.tpall
+  tp:
+    permission: factionessentials.tp
+  back:
+    permission: factionessentials.back
+  top:
+    permission: factionessentials.top
   setwarp:
-    description: Set a warp
     permission: factionessentials.setwarp
   warp:
-    description: Teleport to a warp
     permission: factionessentials.warp
-  tp:
-    description: Teleport to a player
-    permission: factionessentials.tp
-  tpa:
-    description: Request teleport to a player
-    permission: factionessentials.tpa
-  tpaccept:
-    description: Accept teleport request
-    permission: factionessentials.tpa
-  back:
-    description: Teleport to last location
-    permission: factionessentials.back
+  sethome:
+    permission: factionessentials.sethome
+  home:
+    permission: factionessentials.home
+  seehomes:
+    permission: factionessentials.seehomes
+  seehome:
+    permission: factionessentials.seehome
 
 permissions:
+  factionessentials.tpa:
+    default: true
+  factionessentials.tpahere:
+    default: true
+  factionessentials.tpall:
+    default: op
+  factionessentials.tp:
+    default: op
+  factionessentials.back:
+    default: true
+  factionessentials.top:
+    default: true
   factionessentials.setwarp:
     default: op
   factionessentials.warp:
     default: true
-  factionessentials.tp:
+  factionessentials.sethome:
+    default: true
+  factionessentials.home:
+    default: true
+  factionessentials.seehomes:
     default: op
-  factionessentials.tpa:
-    default: true
-  factionessentials.back:
-    default: true
+  factionessentials.seehome:
+    default: op
