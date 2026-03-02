@@ -2,45 +2,47 @@ settings:
   teleport-to-spawn-on-join: true
   main-world: "world"
 
+warps: {}
+homes: {}
+
 messages:
   prefix: "§8[§6FactionEssentials§8] §r"
+  no-permission: "§cYou do not have permission."
+  console-use: "§cUse this command in-game."
+  player-not-found: "§cPlayer not found."
 
   usage:
+    sethome: "§cUsage: /sethome <name>"
+    homes: "§cUsage: /homes"
+    home: "§cUsage: /home <name>"
+    seehomes: "§cUsage: /seehomes <player>"
+    seehome: "§cUsage: /seehome <player> <home>"
+    setwarp: "§cUsage: /setwarp <name>"
+    warp: "§cUsage: /warp <name>"
+    warps: "§cUsage: /warps"
+    back: "§cUsage: /back"
+    break: "§cUsage: /break"
+    tpall: "§cUsage: /tpall"
     tpa: "§cUsage: /tpa <player>"
     tpahere: "§cUsage: /tpahere <player>"
     tpaccept: "§cUsage: /tpaccept"
     tpdeny: "§cUsage: /tpdeny"
-    tpall: "§cUsage: /tpall"
-    tp: "§cUsage: /tp <player>"
-    back: "§cUsage: /back"
     top: "§cUsage: /top"
-    setwarp: "§cUsage: /setwarp <name>"
-    warp: "§cUsage: /warp <name>"
-    sethome: "§cUsage: /sethome <name>"
-    home: "§cUsage: /home <name>"
-    seehomes: "§cUsage: /seehomes <player>"
-    seehome: "§cUsage: /seehome <player> <home>"
 
-  join-teleport: "§aTeleported to server spawn."
+  success:
+    sethome: "§aHome {home} set."
+    home: "§aTeleported to home {home}."
+    setwarp: "§aWarp {warp} set."
+    warp: "§aTeleported to warp {warp}."
+    break: "§aYou broke bedrock and received it."
+    tpall: "§aTeleported all players."
+    back: "§aTeleported back."
+    top: "§aTeleported to highest block."
+    join: "§aTeleported to spawn."
 
-  tpa-sent: "§aTeleport request sent to {player}"
-  tpa-received: "§e{player} wants to teleport to you. /tpaccept or /tpdeny"
-  tpa-accepted: "§aTeleport accepted"
-  tpa-denied: "§cTeleport denied"
-  no-request: "§cNo pending teleport requests"
-
-  tpall: "§aTeleported all players to you"
-  top: "§aTeleported to the highest block"
-  back: "§aTeleported back"
-
-  warp-set: "§aWarp {warp} set"
-  warp-not-found: "§cWarp not found"
-  warp-no-permission: "§cYou do not have permission for this warp"
-
-  home-set: "§aHome {home} set"
-  home-not-found: "§cHome not found"
-
-  player-not-found: "§cPlayer not found."
-
-warps: []
-homes: []
+  error:
+    home-not-found: "§cHome not found."
+    warp-not-found: "§cWarp not found."
+    no-back: "§cNo previous location."
+    no-request: "§cNo pending teleport request."
+    not-bedrock: "§cYou must look at bedrock."
