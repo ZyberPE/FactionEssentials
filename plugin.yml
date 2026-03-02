@@ -87,53 +87,49 @@ commands:
     usage: "/top"
     permission: factionessentials.top
 
+
 permissions:
 
-  factionessentials.*:
-    description: Gives access to all FactionEssentials commands
-    default: op
-    children:
-      factionessentials.sethome: true
-      factionessentials.home: true
-      factionessentials.seehomes: true
-      factionessentials.seehome: true
-      factionessentials.setwarp: true
-      factionessentials.warp: true
-      factionessentials.back: true
-      factionessentials.break: true
-      factionessentials.tpall: true
-      factionessentials.tpa: true
-      factionessentials.top: true
-
   factionessentials.sethome:
+    description: Allows setting homes
     default: true
 
   factionessentials.home:
+    description: Allows using /home and /homes
     default: true
 
   factionessentials.seehomes:
+    description: Allows viewing other player homes
     default: op
 
   factionessentials.seehome:
+    description: Allows teleporting to other player homes
     default: op
 
   factionessentials.setwarp:
+    description: Allows setting warps
     default: op
 
   factionessentials.warp:
+    description: Allows using warps
     default: true
 
   factionessentials.back:
+    description: Allows using /back
     default: true
 
   factionessentials.break:
+    description: Allows breaking bedrock with /break
     default: op
 
   factionessentials.tpall:
+    description: Allows teleporting all players
     default: op
 
   factionessentials.tpa:
+    description: Allows teleport request system
     default: true
 
   factionessentials.top:
+    description: Allows using /top
     default: true
