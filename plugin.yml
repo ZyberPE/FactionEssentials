@@ -1,88 +1,117 @@
 name: FactionEssentials
 main: FactionEssentials\Main
 version: 1.0.0
-api: "5.0.0"
-author: zyberpe
+api: 5.0.0
+author: ZyberPE
+description: Complete Faction Essentials system for PocketMine API 5
+
 commands:
   sethome:
-    description: Set a home
-    usage: "/sethome <name>"
+    description: Set your home
+    usage: "/sethome"
     permission: factionessentials.sethome
+
   home:
-    description: Teleport to a home
-    usage: "/home <name>"
+    description: Teleport to home
+    usage: "/home"
     permission: factionessentials.home
+
   homes:
     description: List your homes
     usage: "/homes"
-    permission: factionessentials.homes
+    permission: factionessentials.home
+
   seehomes:
-    description: See a player's homes
+    description: See another player's homes
     usage: "/seehomes <player>"
-    permission: factionessentials.seehomes
+    permission: factionessentials.admin
+
   seehome:
-    description: Teleport to a player's home
-    usage: "/seehome <player> <home>"
-    permission: factionessentials.seehome
+    description: Teleport to player's home
+    usage: "/seehome <player>"
+    permission: factionessentials.admin
+
   setwarp:
     description: Set a warp
     usage: "/setwarp <name>"
-    permission: factionessentials.setwarp
+    permission: factionessentials.admin
+
   warp:
-    description: Teleport to a warp
+    description: Teleport to warp
     usage: "/warp <name>"
     permission: factionessentials.warp
+
   warps:
-    description: List all warps
+    description: List warps
     usage: "/warps"
-    permission: factionessentials.warps
+    permission: factionessentials.warp
+
+  spawn:
+    description: Teleport to spawn
+    usage: "/spawn"
+    permission: factionessentials.spawn
+
+  setspawn:
+    description: Set spawn
+    usage: "/setspawn"
+    permission: factionessentials.admin
+
   back:
-    description: Teleport back to last location
+    description: Teleport to death location
     usage: "/back"
     permission: factionessentials.back
+
   break:
-    description: Break bedrock you are looking at
+    description: Break bedrock
     usage: "/break"
     permission: factionessentials.break
+
   tpall:
     description: Teleport all players to you
     usage: "/tpall"
-    permission: factionessentials.tpall
+    permission: factionessentials.admin
+
   tpa:
-    description: Request teleport to a player
+    description: Request teleport
     usage: "/tpa <player>"
     permission: factionessentials.tpa
+
   tpahere:
-    description: Request a player to teleport to you
+    description: Request player to teleport to you
     usage: "/tpahere <player>"
-    permission: factionessentials.tpahere
+    permission: factionessentials.tpa
+
   tpaccept:
     description: Accept teleport request
     usage: "/tpaccept"
-    permission: factionessentials.tpaccept
+    permission: factionessentials.tpa
+
   tpdeny:
     description: Deny teleport request
     usage: "/tpdeny"
-    permission: factionessentials.tpdeny
+    permission: factionessentials.tpa
+
   top:
-    description: Teleport on top of the highest block
+    description: Teleport to top block
     usage: "/top"
     permission: factionessentials.top
 
 permissions:
-  factionessentials.sethome: true
-  factionessentials.home: true
-  factionessentials.homes: true
-  factionessentials.seehomes: true
-  factionessentials.seehome: true
-  factionessentials.setwarp: true
-  factionessentials.warp: true
-  factionessentials.warps: true
-  factionessentials.back: true
-  factionessentials.break: true
-  factionessentials.tpall: true
-  factionessentials.tpa: true
-  factionessentials.tpahere: true
-  factionessentials.tpaccept: true
-  factionessentials.tpdeny: true
-  factionessentials.top: true
+  factionessentials.admin:
+    default: op
+  factionessentials.sethome:
+    default: true
+  factionessentials.home:
+    default: true
+  factionessentials.warp:
+    default: true
+  factionessentials.spawn:
+    default: true
+  factionessentials.back:
+    default: true
+  factionessentials.break:
+    default: true
+  factionessentials.tpa:
+    default: true
+  factionessentials.top:
+    default: true
