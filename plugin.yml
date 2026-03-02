@@ -1,37 +1,52 @@
 name: FactionEssentials
 main: FactionEssentials\Main
-version: 1.1.0
+version: 1.2.0
 api: 5.0.0
 author: ZyberPE
+description: Advanced Essentials system for Factions servers.
 
 commands:
   tpa:
+    description: Request teleport to a player
     permission: factionessentials.tpa
   tpahere:
+    description: Request a player to teleport to you
     permission: factionessentials.tpahere
   tpaccept:
+    description: Accept a teleport request
     permission: factionessentials.tpa
   tpdeny:
+    description: Deny a teleport request
     permission: factionessentials.tpa
   tpall:
+    description: Teleport all players to you
     permission: factionessentials.tpall
   tp:
+    description: Teleport to a player
     permission: factionessentials.tp
   back:
+    description: Teleport to last location
     permission: factionessentials.back
   top:
+    description: Teleport to highest block
     permission: factionessentials.top
   setwarp:
+    description: Set a warp
     permission: factionessentials.setwarp
   warp:
+    description: Teleport to a warp
     permission: factionessentials.warp
   sethome:
+    description: Set a home
     permission: factionessentials.sethome
   home:
+    description: Teleport to a home
     permission: factionessentials.home
   seehomes:
+    description: View a player's homes
     permission: factionessentials.seehomes
   seehome:
+    description: Teleport to a player's home
     permission: factionessentials.seehome
 
 permissions:
