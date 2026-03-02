@@ -1,12 +1,36 @@
 messages:
-  warp-set: "§aWarp {warp} has been set!"
-  warp-not-found: "§cWarp not found."
-  no-permission: "§cYou do not have permission."
-  player-not-found: "§cPlayer not found."
-  tpa-sent: "§aTeleport request sent to {player}."
-  tpa-received: "§e{player} wants to teleport to you. Type /tpaccept"
-  tpa-accepted: "§aTeleport request accepted!"
-  no-tpa: "§cNo pending teleport requests."
-  back: "§aTeleported to your last location."
+  usage:
+    tpa: "§cUsage: /tpa <player>"
+    tpahere: "§cUsage: /tpahere <player>"
+    tpall: "§cUsage: /tpall"
+    tpdeny: "§cUsage: /tpdeny"
+    top: "§cUsage: /top"
+    setwarp: "§cUsage: /setwarp <name>"
+    warp: "§cUsage: /warp <name>"
+    sethome: "§cUsage: /sethome <name>"
+    home: "§cUsage: /home <name>"
+    seehomes: "§cUsage: /seehomes <player>"
+    seehome: "§cUsage: /seehome <player> <home>"
+
+  tpa-sent: "§aTeleport request sent to {player}"
+  tpa-received: "§e{player} wants to teleport to you. /tpaccept or /tpdeny"
+  tpa-accepted: "§aTeleport accepted"
+  tpa-denied: "§cTeleport denied"
+  no-request: "§cNo pending teleport requests"
+
+  tpall: "§aTeleported all players to you"
+
+  top: "§aTeleported to the highest block"
+
+  warp-set: "§aWarp {warp} set"
+  warp-not-found: "§cWarp not found"
+  warp-no-permission: "§cYou do not have permission for this warp"
+
+  home-set: "§aHome {home} set"
+  home-not-found: "§cHome not found"
+
+  back: "§aTeleported back"
+  player-not-found: "§cPlayer not found"
 
 warps: []
+homes: []
