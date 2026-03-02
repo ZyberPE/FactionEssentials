@@ -1,210 +1,257 @@
 <?php
+
 declare(strict_types=1);
 
 namespace FactionEssentials;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
-use pocketmine\player\Player;
+use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\item\VanillaItems;
+use pocketmine\utils\Config;
 
 class Main extends PluginBase implements Listener {
 
+    private array $homes = [];
+    private array $warps = [];
     private array $tpaRequests = [];
-    private array $lastPositions = [];
+    private array $lastLocation = [];
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
+
+        @mkdir($this->getDataFolder());
+        $this->homes = (new Config($this->getDataFolder() . "homes.yml", Config::YAML))->getAll();
+        $this->warps = (new Config($this->getDataFolder() . "warps.yml", Config::YAML))->getAll();
     }
 
-    private function msg(string $path): string {
-        return $this->getConfig()->get("messages")["prefix"] .
-            $this->getNested("messages.$path");
+    private function saveHomes(): void {
+        (new Config($this->getDataFolder() . "homes.yml", Config::YAML))->setAll($this->homes)->save();
     }
 
-    private function findPlayer(string $name): ?Player {
+    private function saveWarps(): void {
+        (new Config($this->getDataFolder() . "warps.yml", Config::YAML))->setAll($this->warps)->save();
+    }
+
+    private function msg(Player $player, string $path): void {
+        $prefix = $this->getConfig()->getNested("messages.prefix");
+        $message = $this->getConfig()->getNested("messages.$path");
+        $player->sendMessage(str_replace("{player}", $player->getName(), $prefix . $message));
+    }
+
+    public function onJoin(PlayerJoinEvent $event): void {
+        $player = $event->getPlayer();
+
+        if($this->getConfig()->getNested("settings.teleport-to-spawn-on-join")){
+            $worldName = $this->getConfig()->getNested("settings.main-world");
+            $world = $this->getServer()->getWorldManager()->getWorldByName($worldName);
+
+            if($world !== null){
+                $player->teleport($world->getSpawnLocation());
+            }
+        }
+    }
+
+    private function getPlayerByPartial(string $name): ?Player {
         foreach($this->getServer()->getOnlinePlayers() as $player){
-            if(stripos($player->getName(), $name) === 0){
+            if(stripos($player->getName(), $name) !== false){
                 return $player;
             }
         }
         return null;
     }
 
-    /* ---------------- Join Teleport ---------------- */
-
-    public function onJoin(PlayerJoinEvent $event): void {
-        if($this->getNested("settings.teleport-to-spawn-on-join")){
-            $world = $this->getServer()->getWorldManager()
-                ->getWorldByName($this->getNested("settings.main-world"));
-            if($world){
-                $event->getPlayer()->teleport($world->getSpawnLocation());
-                $event->getPlayer()->sendMessage($this->msg("success.join"));
-            }
-        }
-    }
-
-    /* ---------------- Commands ---------------- */
-
-    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
 
         if(!$sender instanceof Player){
-            $sender->sendMessage($this->msg("console-use"));
+            $sender->sendMessage("Run this in-game.");
             return true;
         }
 
-        $name = strtolower($cmd->getName());
+        switch(strtolower($command->getName())){
 
-        /* ---------------- SET HOME ---------------- */
-        if($name === "sethome"){
-            if(!isset($args[0])){
-                $sender->sendMessage($this->msg("usage.sethome"));
-                return true;
-            }
+            case "sethome":
+                if(!$sender->hasPermission("factionessentials.sethome")){
+                    $this->msg($sender, "no-permission");
+                    return true;
+                }
 
-            $homes = $this->getConfig()->get("homes");
-            $homes[strtolower($sender->getName())][strtolower($args[0])] = [
-                "x"=>$sender->getPosition()->getX(),
-                "y"=>$sender->getPosition()->getY(),
-                "z"=>$sender->getPosition()->getZ(),
-                "world"=>$sender->getWorld()->getFolderName()
-            ];
-            $this->getConfig()->set("homes", $homes);
-            $this->saveConfig();
+                if(!isset($args[0])){
+                    $sender->sendMessage($this->getConfig()->getNested("usage.sethome"));
+                    return true;
+                }
 
-            $sender->sendMessage(str_replace("{home}", $args[0], $this->msg("success.sethome")));
-            return true;
-        }
+                $this->homes[strtolower($sender->getName())][$args[0]] = [
+                    "x"=>$sender->getPosition()->getX(),
+                    "y"=>$sender->getPosition()->getY(),
+                    "z"=>$sender->getPosition()->getZ(),
+                    "world"=>$sender->getWorld()->getFolderName()
+                ];
 
-        /* ---------------- HOME ---------------- */
-        if($name === "home"){
-            if(!isset($args[0])){
-                $sender->sendMessage($this->msg("usage.home"));
-                return true;
-            }
+                $this->saveHomes();
+                $this->msg($sender, "success.sethome");
+            break;
 
-            $homes = $this->getConfig()->get("homes");
-            $playerHomes = $homes[strtolower($sender->getName())] ?? [];
+            case "home":
+                if(!isset($args[0])){
+                    $sender->sendMessage($this->getConfig()->getNested("usage.home"));
+                    return true;
+                }
 
-            if(!isset($playerHomes[strtolower($args[0])])){
-                $sender->sendMessage($this->msg("error.home-not-found"));
-                return true;
-            }
+                $name = strtolower($sender->getName());
+                if(!isset($this->homes[$name][$args[0]])){
+                    $this->msg($sender, "home-not-found");
+                    return true;
+                }
 
-            $home = $playerHomes[strtolower($args[0])];
-            $world = $this->getServer()->getWorldManager()->getWorldByName($home["world"]);
-            $this->lastPositions[$sender->getName()] = $sender->getPosition();
-            $sender->teleport(new Position($home["x"], $home["y"], $home["z"], $world));
+                $this->lastLocation[$sender->getName()] = $sender->getPosition();
 
-            $sender->sendMessage(str_replace("{home}", $args[0], $this->msg("success.home")));
-            return true;
-        }
+                $data = $this->homes[$name][$args[0]];
+                $world = $this->getServer()->getWorldManager()->getWorldByName($data["world"]);
 
-        /* ---------------- HOMES LIST ---------------- */
-        if($name === "homes"){
-            $homes = $this->getConfig()->get("homes");
-            $playerHomes = $homes[strtolower($sender->getName())] ?? [];
+                if($world !== null){
+                    $sender->teleport(new Position($data["x"], $data["y"], $data["z"], $world));
+                    $this->msg($sender, "success.home");
+                }
+            break;
 
-            if(empty($playerHomes)){
-                $sender->sendMessage("§cNo homes set.");
-                return true;
-            }
+            case "back":
+                if(!isset($this->lastLocation[$sender->getName()])){
+                    $this->msg($sender, "no-back");
+                    return true;
+                }
+                $sender->teleport($this->lastLocation[$sender->getName()]);
+                $this->msg($sender, "success.back");
+            break;
 
-            $sender->sendMessage("§aYour homes: §f" . implode(", ", array_keys($playerHomes)));
-            return true;
-        }
+            case "setwarp":
+                if(!$sender->hasPermission("factionessentials.setwarp")){
+                    $this->msg($sender, "no-permission");
+                    return true;
+                }
 
-        /* ---------------- SETWARP ---------------- */
-        if($name === "setwarp"){
-            if(!isset($args[0])){
-                $sender->sendMessage($this->msg("usage.setwarp"));
-                return true;
-            }
+                if(!isset($args[0])){
+                    $sender->sendMessage($this->getConfig()->getNested("usage.setwarp"));
+                    return true;
+                }
 
-            $warps = $this->getConfig()->get("warps");
-            $warps[strtolower($args[0])] = [
-                "x"=>$sender->getPosition()->getX(),
-                "y"=>$sender->getPosition()->getY(),
-                "z"=>$sender->getPosition()->getZ(),
-                "world"=>$sender->getWorld()->getFolderName()
-            ];
-            $this->getConfig()->set("warps", $warps);
-            $this->saveConfig();
+                $this->warps[$args[0]] = [
+                    "x"=>$sender->getPosition()->getX(),
+                    "y"=>$sender->getPosition()->getY(),
+                    "z"=>$sender->getPosition()->getZ(),
+                    "world"=>$sender->getWorld()->getFolderName()
+                ];
 
-            $sender->sendMessage(str_replace("{warp}", $args[0], $this->msg("success.setwarp")));
-            return true;
-        }
+                $this->saveWarps();
+                $this->msg($sender, "success.setwarp");
+            break;
 
-        /* ---------------- WARP ---------------- */
-        if($name === "warp"){
-            if(!isset($args[0])){
-                $sender->sendMessage($this->msg("usage.warp"));
-                return true;
-            }
+            case "warp":
+                if(!isset($args[0])){
+                    $sender->sendMessage($this->getConfig()->getNested("usage.warp"));
+                    return true;
+                }
 
-            $warps = $this->getConfig()->get("warps");
-            if(!isset($warps[strtolower($args[0])])){
-                $sender->sendMessage($this->msg("error.warp-not-found"));
-                return true;
-            }
+                if(!isset($this->warps[$args[0]])){
+                    $this->msg($sender, "warp-not-found");
+                    return true;
+                }
 
-            $warp = $warps[strtolower($args[0])];
-            $world = $this->getServer()->getWorldManager()->getWorldByName($warp["world"]);
+                $this->lastLocation[$sender->getName()] = $sender->getPosition();
 
-            $this->lastPositions[$sender->getName()] = $sender->getPosition();
-            $sender->teleport(new Position($warp["x"], $warp["y"], $warp["z"], $world));
+                $data = $this->warps[$args[0]];
+                $world = $this->getServer()->getWorldManager()->getWorldByName($data["world"]);
 
-            $sender->sendMessage(str_replace("{warp}", $args[0], $this->msg("success.warp")));
-            return true;
-        }
+                if($world !== null){
+                    $sender->teleport(new Position($data["x"], $data["y"], $data["z"], $world));
+                    $this->msg($sender, "success.warp");
+                }
+            break;
 
-        /* ---------------- BACK ---------------- */
-        if($name === "back"){
-            if(!isset($this->lastPositions[$sender->getName()])){
-                $sender->sendMessage($this->msg("error.no-back"));
-                return true;
-            }
+            case "tpa":
+                if(!isset($args[0])){
+                    $sender->sendMessage($this->getConfig()->getNested("usage.tpa"));
+                    return true;
+                }
 
-            $sender->teleport($this->lastPositions[$sender->getName()]);
-            $sender->sendMessage($this->msg("success.back"));
-            return true;
-        }
+                $target = $this->getPlayerByPartial($args[0]);
+                if($target === null){
+                    $this->msg($sender, "player-not-found");
+                    return true;
+                }
 
-        /* ---------------- TOP ---------------- */
-        if($name === "top"){
-            $world = $sender->getWorld();
-            $x = (int)$sender->getPosition()->getX();
-            $z = (int)$sender->getPosition()->getZ();
-            $y = $world->getHighestBlockAt($x, $z);
+                $this->tpaRequests[$target->getName()] = $sender->getName();
+                $this->msg($sender, "success.tpa-sent");
+                $target->sendMessage("§e{$sender->getName()} sent you a teleport request. Use /tpaccept or /tpdeny");
+            break;
 
-            $this->lastPositions[$sender->getName()] = $sender->getPosition();
-            $sender->teleport(new Position($x, $y + 1, $z, $world));
+            case "tpaccept":
+                if(!isset($this->tpaRequests[$sender->getName()])){
+                    $this->msg($sender, "no-request");
+                    return true;
+                }
 
-            $sender->sendMessage($this->msg("success.top"));
-            return true;
-        }
+                $requester = $this->getServer()->getPlayerExact($this->tpaRequests[$sender->getName()]);
+                if($requester !== null){
+                    $requester->teleport($sender->getPosition());
+                    $this->msg($sender, "success.tpaccept");
+                }
 
-        /* ---------------- BREAK BEDROCK ---------------- */
-        if($name === "break"){
-            $block = $sender->getTargetBlock(5);
+                unset($this->tpaRequests[$sender->getName()]);
+            break;
 
-            if($block->getTypeId() !== VanillaBlocks::BEDROCK()->getTypeId()){
-                $sender->sendMessage($this->msg("error.not-bedrock"));
-                return true;
-            }
+            case "tpdeny":
+                if(!isset($this->tpaRequests[$sender->getName()])){
+                    $this->msg($sender, "no-request");
+                    return true;
+                }
 
-            $block->getPosition()->getWorld()
-                ->setBlock($block->getPosition(), VanillaBlocks::AIR());
+                unset($this->tpaRequests[$sender->getName()]);
+                $this->msg($sender, "success.tpdeny");
+            break;
 
-            $sender->getInventory()->addItem(VanillaItems::BEDROCK());
-            $sender->sendMessage($this->msg("success.break"));
-            return true;
+            case "top":
+                $pos = $sender->getPosition();
+                $world = $sender->getWorld();
+
+                $highest = $world->getHighestBlockAt((int)$pos->getX(), (int)$pos->getZ());
+                $sender->teleport(new Position($pos->getX(), $highest + 1, $pos->getZ(), $world));
+                $this->msg($sender, "success.top");
+            break;
+
+            case "break":
+                if(!$sender->hasPermission("factionessentials.break")){
+                    $this->msg($sender, "no-permission");
+                    return true;
+                }
+
+                $block = $sender->getTargetBlock(5);
+                if($block->getTypeId() === VanillaBlocks::BEDROCK()->getTypeId()){
+                    $sender->getWorld()->setBlock($block->getPosition(), VanillaBlocks::AIR());
+                    $sender->getInventory()->addItem(VanillaItems::BEDROCK());
+                    $this->msg($sender, "success.break");
+                }
+            break;
+
+            case "tpall":
+                if(!$sender->hasPermission("factionessentials.tpall")){
+                    $this->msg($sender, "no-permission");
+                    return true;
+                }
+
+                foreach($this->getServer()->getOnlinePlayers() as $player){
+                    if($player !== $sender){
+                        $player->teleport($sender->getPosition());
+                    }
+                }
+                $this->msg($sender, "success.tpall");
+            break;
         }
 
         return true;
