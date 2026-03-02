@@ -1,36 +1,46 @@
 settings:
   teleport-to-spawn-on-join: true
-  main-world: world
+  main-world: "world"
 
 messages:
-  prefix: "§6[FE] §r"
+  prefix: "§8[§6FactionEssentials§8] §r"
 
-  no-permission: "§cYou do not have permission."
+  no-permission: "§cYou do not have permission to use this command."
   player-not-found: "§cPlayer not found."
-  home-not-found: "§cHome not found."
-  warp-not-found: "§cWarp not found."
-  no-back: "§cNo previous location."
-  no-request: "§cYou have no teleport requests."
+  console-use: "§cThis command can only be used in-game."
 
-  success:
-    sethome: "§aHome set successfully."
-    home: "§aTeleported to home."
-    setwarp: "§aWarp created."
-    warp: "§aWarped successfully."
-    back: "§aTeleported back."
-    break: "§aBedrock broken and added to inventory."
-    tpall: "§aAll players teleported."
-    tpa-sent: "§aTeleport request sent."
-    tpaccept: "§aTeleport accepted."
-    tpdeny: "§cTeleport denied."
-    top: "§aTeleported to highest block."
+  usage:
+    sethome: "§cUsage: /sethome <name>"
+    home: "§cUsage: /home <name>"
+    homes: "§cUsage: /homes"
+    seehomes: "§cUsage: /seehomes <player>"
+    seehome: "§cUsage: /seehome <player> <home>"
+    setwarp: "§cUsage: /setwarp <name>"
+    warp: "§cUsage: /warp <name>"
+    warps: "§cUsage: /warps"
+    back: "§cUsage: /back"
+    break: "§cUsage: /break"
+    tpa: "§cUsage: /tpa <player>"
+    tpahere: "§cUsage: /tpahere <player>"
+    tpaccept: "§cUsage: /tpaccept"
+    tpdeny: "§cUsage: /tpdeny"
+    tpall: "§cUsage: /tpall"
+    top: "§cUsage: /top"
 
-usage:
-  sethome: "§eUsage: /sethome <name>"
-  home: "§eUsage: /home <name>"
-  setwarp: "§eUsage: /setwarp <name>"
-  warp: "§eUsage: /warp <name>"
-  tpa: "§eUsage: /tpa <player>"
-  tpahere: "§eUsage: /tpahere <player>"
-  seehomes: "§eUsage: /seehomes <player>"
-  seehome: "§eUsage: /seehome <player> <home>"
+  join-teleport: "§aTeleported to server spawn."
+
+  home:
+    set-success: "§aHome §e{home} §aset successfully."
+    teleport-success: "§aTeleported to home §e{home}"
+    not-found: "§cHome not found."
+    list: "§aYour homes: §f{homes}"
+
+  warp:
+    set-success: "§aWarp §e{warp} §aset successfully."
+    teleport-success: "§aTeleported to warp §e{warp}"
+    not-found: "§cWarp not found."
+    no-permission: "§cYou do not have permission for this warp."
+
+  break:
+    success: "§aYou successfully broke bedrock and received it."
+    not-bedrock: "§cYou must be looking at bedrock."
