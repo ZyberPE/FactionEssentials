@@ -1,76 +1,139 @@
 name: FactionEssentials
 main: FactionEssentials\Main
-version: 1.2.0
+version: 2.0.0
 api: 5.0.0
-author: ZyberPE
-description: Advanced Essentials system for Factions servers.
+author: ApexPELegitz
+description: Complete Faction Essentials system for PocketMine API 5
 
 commands:
-  tpa:
-    description: Request teleport to a player
-    permission: factionessentials.tpa
-  tpahere:
-    description: Request a player to teleport to you
-    permission: factionessentials.tpahere
-  tpaccept:
-    description: Accept a teleport request
-    permission: factionessentials.tpa
-  tpdeny:
-    description: Deny a teleport request
-    permission: factionessentials.tpa
-  tpall:
-    description: Teleport all players to you
-    permission: factionessentials.tpall
-  tp:
-    description: Teleport to a player
-    permission: factionessentials.tp
-  back:
-    description: Teleport to last location
-    permission: factionessentials.back
-  top:
-    description: Teleport to highest block
-    permission: factionessentials.top
-  setwarp:
-    description: Set a warp
-    permission: factionessentials.setwarp
-  warp:
-    description: Teleport to a warp
-    permission: factionessentials.warp
+
   sethome:
-    description: Set a home
+    description: Set a home location
+    usage: "/sethome <name>"
     permission: factionessentials.sethome
+
+  homes:
+    description: List your homes
+    usage: "/homes"
+    permission: factionessentials.home
+
   home:
     description: Teleport to a home
+    usage: "/home <name>"
     permission: factionessentials.home
+
   seehomes:
-    description: View a player's homes
+    description: View another player's homes
+    usage: "/seehomes <player>"
     permission: factionessentials.seehomes
+
   seehome:
-    description: Teleport to a player's home
+    description: Teleport to another player's home
+    usage: "/seehome <player> <home>"
     permission: factionessentials.seehome
 
+  setwarp:
+    description: Set a warp
+    usage: "/setwarp <name>"
+    permission: factionessentials.setwarp
+
+  warp:
+    description: Teleport to a warp
+    usage: "/warp <name>"
+    permission: factionessentials.warp
+
+  warps:
+    description: List all warps
+    usage: "/warps"
+    permission: factionessentials.warp
+
+  back:
+    description: Teleport to your previous location
+    usage: "/back"
+    permission: factionessentials.back
+
+  break:
+    description: Break bedrock you are looking at
+    usage: "/break"
+    permission: factionessentials.break
+
+  tpall:
+    description: Teleport all players to you
+    usage: "/tpall"
+    permission: factionessentials.tpall
+
+  tpa:
+    description: Send teleport request
+    usage: "/tpa <player>"
+    permission: factionessentials.tpa
+
+  tpahere:
+    description: Request player to teleport to you
+    usage: "/tpahere <player>"
+    permission: factionessentials.tpa
+
+  tpaccept:
+    description: Accept teleport request
+    usage: "/tpaccept"
+    permission: factionessentials.tpa
+
+  tpdeny:
+    description: Deny teleport request
+    usage: "/tpdeny"
+    permission: factionessentials.tpa
+
+  top:
+    description: Teleport to highest block above you
+    usage: "/top"
+    permission: factionessentials.top
+
 permissions:
-  factionessentials.tpa:
-    default: true
-  factionessentials.tpahere:
-    default: true
-  factionessentials.tpall:
+
+  factionessentials.*:
+    description: Gives access to all FactionEssentials commands
     default: op
-  factionessentials.tp:
-    default: op
-  factionessentials.back:
-    default: true
-  factionessentials.top:
-    default: true
-  factionessentials.setwarp:
-    default: op
-  factionessentials.warp:
-    default: true
+    children:
+      factionessentials.sethome: true
+      factionessentials.home: true
+      factionessentials.seehomes: true
+      factionessentials.seehome: true
+      factionessentials.setwarp: true
+      factionessentials.warp: true
+      factionessentials.back: true
+      factionessentials.break: true
+      factionessentials.tpall: true
+      factionessentials.tpa: true
+      factionessentials.top: true
+
   factionessentials.sethome:
     default: true
+
   factionessentials.home:
     default: true
+
   factionessentials.seehomes:
     default: op
+
   factionessentials.seehome:
     default: op
+
+  factionessentials.setwarp:
+    default: op
+
+  factionessentials.warp:
+    default: true
+
+  factionessentials.back:
+    default: true
+
+  factionessentials.break:
+    default: op
+
+  factionessentials.tpall:
+    default: op
+
+  factionessentials.tpa:
+    default: true
+
+  factionessentials.top:
+    default: true
