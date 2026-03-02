@@ -1,9 +1,18 @@
+settings:
+  teleport-to-spawn-on-join: true
+  main-world: "world"
+
 messages:
+  prefix: "§8[§6FactionEssentials§8] §r"
+
   usage:
     tpa: "§cUsage: /tpa <player>"
     tpahere: "§cUsage: /tpahere <player>"
-    tpall: "§cUsage: /tpall"
+    tpaccept: "§cUsage: /tpaccept"
     tpdeny: "§cUsage: /tpdeny"
+    tpall: "§cUsage: /tpall"
+    tp: "§cUsage: /tp <player>"
+    back: "§cUsage: /back"
     top: "§cUsage: /top"
     setwarp: "§cUsage: /setwarp <name>"
     warp: "§cUsage: /warp <name>"
@@ -12,6 +21,8 @@ messages:
     seehomes: "§cUsage: /seehomes <player>"
     seehome: "§cUsage: /seehome <player> <home>"
 
+  join-teleport: "§aTeleported to server spawn."
+
   tpa-sent: "§aTeleport request sent to {player}"
   tpa-received: "§e{player} wants to teleport to you. /tpaccept or /tpdeny"
   tpa-accepted: "§aTeleport accepted"
@@ -19,8 +30,8 @@ messages:
   no-request: "§cNo pending teleport requests"
 
   tpall: "§aTeleported all players to you"
-
   top: "§aTeleported to the highest block"
+  back: "§aTeleported back"
 
   warp-set: "§aWarp {warp} set"
   warp-not-found: "§cWarp not found"
@@ -29,8 +40,7 @@ messages:
   home-set: "§aHome {home} set"
   home-not-found: "§cHome not found"
 
-  back: "§aTeleported back"
-  player-not-found: "§cPlayer not found"
+  player-not-found: "§cPlayer not found."
 
 warps: []
 homes: []
