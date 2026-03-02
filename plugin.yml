@@ -1,135 +1,86 @@
 name: FactionEssentials
 main: FactionEssentials\Main
-version: 2.0.0
+version: 1.0.0
 api: 5.0.0
 author: ApexPELegitz
-description: Complete Faction Essentials system for PocketMine API 5
+description: Advanced Faction Essentials for PocketMine API 5
 
 commands:
-
   sethome:
-    description: Set a home location
-    usage: "/sethome <name>"
+    description: Set a home
     permission: factionessentials.sethome
-
   homes:
     description: List your homes
-    usage: "/homes"
-    permission: factionessentials.home
-
+    permission: factionessentials.homes
   home:
     description: Teleport to a home
-    usage: "/home <name>"
     permission: factionessentials.home
-
   seehomes:
-    description: View another player's homes
-    usage: "/seehomes <player>"
+    description: View player homes
     permission: factionessentials.seehomes
-
   seehome:
-    description: Teleport to another player's home
-    usage: "/seehome <player> <home>"
+    description: Teleport to player home
     permission: factionessentials.seehome
-
   setwarp:
     description: Set a warp
-    usage: "/setwarp <name>"
     permission: factionessentials.setwarp
-
   warp:
     description: Teleport to a warp
-    usage: "/warp <name>"
     permission: factionessentials.warp
-
   warps:
-    description: List all warps
-    usage: "/warps"
-    permission: factionessentials.warp
-
+    description: List warps
+    permission: factionessentials.warps
   back:
-    description: Teleport to your previous location
-    usage: "/back"
+    description: Return to last location
     permission: factionessentials.back
-
   break:
-    description: Break bedrock you are looking at
-    usage: "/break"
+    description: Break bedrock you look at
     permission: factionessentials.break
-
   tpall:
     description: Teleport all players to you
-    usage: "/tpall"
     permission: factionessentials.tpall
-
   tpa:
-    description: Send teleport request
-    usage: "/tpa <player>"
+    description: Request teleport to player
     permission: factionessentials.tpa
-
   tpahere:
-    description: Request player to teleport to you
-    usage: "/tpahere <player>"
+    description: Request player teleport to you
     permission: factionessentials.tpa
-
   tpaccept:
     description: Accept teleport request
-    usage: "/tpaccept"
     permission: factionessentials.tpa
-
   tpdeny:
     description: Deny teleport request
-    usage: "/tpdeny"
     permission: factionessentials.tpa
-
   top:
-    description: Teleport to highest block above you
-    usage: "/top"
+    description: Teleport to highest block
     permission: factionessentials.top
 
-
 permissions:
-
+  factionessentials.*:
+    default: op
   factionessentials.sethome:
-    description: Allows setting homes
     default: true
-
+  factionessentials.homes:
+    default: true
   factionessentials.home:
-    description: Allows using /home and /homes
     default: true
-
-  factionessentials.seehomes:
-    description: Allows viewing other player homes
-    default: op
-
-  factionessentials.seehome:
-    description: Allows teleporting to other player homes
-    default: op
-
   factionessentials.setwarp:
-    description: Allows setting warps
     default: op
-
   factionessentials.warp:
-    description: Allows using warps
     default: true
-
+  factionessentials.warps:
+    default: true
   factionessentials.back:
-    description: Allows using /back
     default: true
-
   factionessentials.break:
-    description: Allows breaking bedrock with /break
     default: op
-
   factionessentials.tpall:
-    description: Allows teleporting all players
     default: op
-
   factionessentials.tpa:
-    description: Allows teleport request system
     default: true
-
   factionessentials.top:
-    description: Allows using /top
     default: true
+  factionessentials.seehomes:
+    default: op
+  factionessentials.seehome:
+    default: op
