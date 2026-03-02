@@ -1,62 +1,30 @@
-settings:
-  teleport-to-spawn-on-join: true
-  main-world: "world"
-
 messages:
-  prefix: "§8[§6FactionEssentials§8] §r"
-  no-permission: "§cYou do not have permission to use this command."
-  player-not-found: "§cPlayer not found."
-  console-use: "§cThis command can only be used in-game."
+  no-permission: "§cYou do not have permission."
+  usage: "§cUsage: {usage}"
 
-  usage:
-    sethome: "§cUsage: /sethome <name>"
-    home: "§cUsage: /home <name>"
-    homes: "§cUsage: /homes"
-    seehomes: "§cUsage: /seehomes <player>"
-    seehome: "§cUsage: /seehome <player> <home>"
-    setwarp: "§cUsage: /setwarp <name>"
-    warp: "§cUsage: /warp <name>"
-    warps: "§cUsage: /warps"
-    back: "§cUsage: /back"
-    break: "§cUsage: /break"
-    tpa: "§cUsage: /tpa <player>"
-    tpahere: "§cUsage: /tpahere <player>"
-    tpaccept: "§cUsage: /tpaccept"
-    tpdeny: "§cUsage: /tpdeny"
-    tpall: "§cUsage: /tpall"
-    top: "§cUsage: /top"
+  home-set: "§aHome set successfully."
+  home-not-found: "§cHome not found."
+  homes-list: "§eYour homes: {homes}"
 
-  join-teleport: "§aTeleported to server spawn."
+  warp-set: "§aWarp created."
+  warp-not-found: "§cWarp not found."
+  warp-list: "§eWarps: {warps}"
 
-  home:
-    set-success: "§aHome §e{home} §aset successfully."
-    teleport-success: "§aTeleported to home §e{home}"
-    not-found: "§cHome not found."
-    list: "§aYour homes: §f{homes}"
+  spawn-set: "§aSpawn location set."
+  spawn-teleport: "§aTeleported to spawn."
 
-  warp:
-    set-success: "§aWarp §e{warp} §aset successfully."
-    teleport-success: "§aTeleported to warp §e{warp}"
-    not-found: "§cWarp not found."
-    no-permission: "§cYou do not have permission for this warp."
+  bedrock-success: "§aBedrock broken and added to inventory."
+  not-bedrock: "§cYou must be looking at bedrock."
 
-  break:
-    success: "§aYou successfully broke bedrock and received it."
-    not-bedrock: "§cYou must be looking at bedrock."
+  back-success: "§aTeleported to death location."
+  no-death: "§cNo death location saved."
 
-  tpa:
-    sent: "§aTeleport request sent to §e{player}"
-    received: "§e{player} wants to teleport to you. §a/tpaccept §7or §c/tpdeny"
-    accepted: "§aTeleport request accepted."
-    denied: "§cTeleport request denied."
-    no-request: "§cYou do not have a pending teleport request."
+  tp-sent: "§aTeleport request sent."
+  tp-received: "§eYou received a teleport request."
+  tp-accepted: "§aTeleport request accepted."
+  tp-denied: "§cTeleport request denied."
+  no-request: "§cNo teleport request found."
 
-  tpall:
-    success: "§aTeleported all players to you."
+  tpall-success: "§aAll players teleported."
 
-  back:
-    success: "§aTeleported back to previous location."
-    no-location: "§cNo previous location saved."
-
-  top:
-    success: "§aTeleported to the highest block above you."
+  top-success: "§aTeleported to top."
