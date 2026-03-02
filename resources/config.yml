@@ -1,0 +1,12 @@
+messages:
+  warp-set: "§aWarp {warp} has been set!"
+  warp-not-found: "§cWarp not found."
+  no-permission: "§cYou do not have permission."
+  player-not-found: "§cPlayer not found."
+  tpa-sent: "§aTeleport request sent to {player}."
+  tpa-received: "§e{player} wants to teleport to you. Type /tpaccept"
+  tpa-accepted: "§aTeleport request accepted!"
+  no-tpa: "§cNo pending teleport requests."
+  back: "§aTeleported to your last location."
+
+warps: []
