@@ -1,0 +1,38 @@
+name: FactionEssentials
+main: FactionEssentials\Main
+version: 1.0.0
+api: 5.0.0
+author: zyberpe
+description: Basic essentials system for faction servers.
+
+commands:
+  setwarp:
+    description: Set a warp
+    permission: factionessentials.setwarp
+  warp:
+    description: Teleport to a warp
+    permission: factionessentials.warp
+  tp:
+    description: Teleport to a player
+    permission: factionessentials.tp
+  tpa:
+    description: Request teleport to a player
+    permission: factionessentials.tpa
+  tpaccept:
+    description: Accept teleport request
+    permission: factionessentials.tpa
+  back:
+    description: Teleport to last location
+    permission: factionessentials.back
+
+permissions:
+  factionessentials.setwarp:
+    default: op
+  factionessentials.warp:
+    default: true
+  factionessentials.tp:
+    default: op
+  factionessentials.tpa:
+    default: true
+  factionessentials.back:
+    default: true
