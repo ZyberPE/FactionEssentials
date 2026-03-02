@@ -3,96 +3,60 @@ main: FactionEssentials\Main
 version: 1.0.0
 api: 5.0.0
 author: ZyberPE
-description: Complete Faction Essentials system for PocketMine API 5
 
 commands:
   sethome:
-    description: Set your home
     usage: "/sethome"
     permission: factionessentials.sethome
-
   home:
-    description: Teleport to home
     usage: "/home"
     permission: factionessentials.home
-
   homes:
-    description: List your homes
     usage: "/homes"
     permission: factionessentials.home
-
   seehomes:
-    description: See another player's homes
     usage: "/seehomes <player>"
     permission: factionessentials.admin
-
   seehome:
-    description: Teleport to player's home
     usage: "/seehome <player>"
     permission: factionessentials.admin
-
   setwarp:
-    description: Set a warp
     usage: "/setwarp <name>"
     permission: factionessentials.admin
-
   warp:
-    description: Teleport to warp
     usage: "/warp <name>"
     permission: factionessentials.warp
-
   warps:
-    description: List warps
     usage: "/warps"
     permission: factionessentials.warp
-
   spawn:
-    description: Teleport to spawn
     usage: "/spawn"
     permission: factionessentials.spawn
-
   setspawn:
-    description: Set spawn
     usage: "/setspawn"
     permission: factionessentials.admin
-
   back:
-    description: Teleport to death location
     usage: "/back"
     permission: factionessentials.back
-
   break:
-    description: Break bedrock
     usage: "/break"
     permission: factionessentials.break
-
   tpall:
-    description: Teleport all players to you
     usage: "/tpall"
     permission: factionessentials.admin
-
   tpa:
-    description: Request teleport
     usage: "/tpa <player>"
     permission: factionessentials.tpa
-
   tpahere:
-    description: Request player to teleport to you
     usage: "/tpahere <player>"
     permission: factionessentials.tpa
-
   tpaccept:
-    description: Accept teleport request
     usage: "/tpaccept"
     permission: factionessentials.tpa
-
   tpdeny:
-    description: Deny teleport request
     usage: "/tpdeny"
     permission: factionessentials.tpa
-
   top:
-    description: Teleport to top block
     usage: "/top"
     permission: factionessentials.top
 
