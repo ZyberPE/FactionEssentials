@@ -11,7 +11,7 @@ use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\world\Position;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerTeleportEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 
 class Main extends PluginBase implements Listener {
 
@@ -25,9 +25,17 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
-    public function onTeleport(PlayerTeleportEvent $event): void {
+    // Track last position safely
+    public function onMove(PlayerMoveEvent $event): void {
         $player = $event->getPlayer();
-        $this->lastPositions[$player->getName()] = $event->getFrom();
+
+        if(
+            $event->getFrom()->getFloorX() !== $event->getTo()->getFloorX() ||
+            $event->getFrom()->getFloorY() !== $event->getTo()->getFloorY() ||
+            $event->getFrom()->getFloorZ() !== $event->getTo()->getFloorZ()
+        ){
+            $this->lastPositions[$player->getName()] = $event->getFrom();
+        }
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
@@ -37,7 +45,7 @@ class Main extends PluginBase implements Listener {
             return true;
         }
 
-        switch($command->getName()) {
+        switch(strtolower($command->getName())) {
 
             case "setwarp":
                 if(!isset($args[0])) {
@@ -59,7 +67,7 @@ class Main extends PluginBase implements Listener {
                 $this->config->set("warps", $warps);
                 $this->config->save();
 
-                $sender->sendMessage(str_replace("{warp}", $warpName, $this->config->get("messages")["warp-set"]));
+                $sender->sendMessage("§aWarp {$warpName} set!");
             return true;
 
             case "warp":
@@ -72,7 +80,7 @@ class Main extends PluginBase implements Listener {
                 $warps = $this->config->get("warps");
 
                 if(!isset($warps[$warpName])) {
-                    $sender->sendMessage($this->config->get("messages")["warp-not-found"]);
+                    $sender->sendMessage("§cWarp not found.");
                     return true;
                 }
 
@@ -80,7 +88,7 @@ class Main extends PluginBase implements Listener {
                 $world = $this->getServer()->getWorldManager()->getWorldByName($data["world"]);
 
                 if($world === null) {
-                    $sender->sendMessage("World not loaded.");
+                    $sender->sendMessage("§cWorld not loaded.");
                     return true;
                 }
 
@@ -92,7 +100,7 @@ class Main extends PluginBase implements Listener {
 
                 $target = $this->getServer()->getPlayerExact($args[0]);
                 if(!$target instanceof Player){
-                    $sender->sendMessage($this->config->get("messages")["player-not-found"]);
+                    $sender->sendMessage("§cPlayer not found.");
                     return true;
                 }
 
@@ -104,28 +112,28 @@ class Main extends PluginBase implements Listener {
 
                 $target = $this->getServer()->getPlayerExact($args[0]);
                 if(!$target instanceof Player){
-                    $sender->sendMessage($this->config->get("messages")["player-not-found"]);
+                    $sender->sendMessage("§cPlayer not found.");
                     return true;
                 }
 
                 $this->tpaRequests[$target->getName()] = $sender->getName();
 
-                $sender->sendMessage(str_replace("{player}", $target->getName(), $this->config->get("messages")["tpa-sent"]));
-                $target->sendMessage(str_replace("{player}", $sender->getName(), $this->config->get("messages")["tpa-received"]));
+                $sender->sendMessage("§aTeleport request sent.");
+                $target->sendMessage("§e{$sender->getName()} wants to teleport to you. Type /tpaccept");
             return true;
 
             case "tpaccept":
                 $name = $sender->getName();
 
                 if(!isset($this->tpaRequests[$name])) {
-                    $sender->sendMessage($this->config->get("messages")["no-tpa"]);
+                    $sender->sendMessage("§cNo pending teleport requests.");
                     return true;
                 }
 
                 $requester = $this->getServer()->getPlayerExact($this->tpaRequests[$name]);
                 if($requester instanceof Player){
                     $requester->teleport($sender->getPosition());
-                    $sender->sendMessage($this->config->get("messages")["tpa-accepted"]);
+                    $sender->sendMessage("§aTeleport request accepted.");
                 }
 
                 unset($this->tpaRequests[$name]);
@@ -135,7 +143,9 @@ class Main extends PluginBase implements Listener {
                 $name = $sender->getName();
                 if(isset($this->lastPositions[$name])) {
                     $sender->teleport($this->lastPositions[$name]);
-                    $sender->sendMessage($this->config->get("messages")["back"]);
+                    $sender->sendMessage("§aTeleported back.");
+                } else {
+                    $sender->sendMessage("§cNo previous location.");
                 }
             return true;
         }
