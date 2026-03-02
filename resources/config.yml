@@ -4,7 +4,6 @@ settings:
 
 messages:
   prefix: "§8[§6FactionEssentials§8] §r"
-
   no-permission: "§cYou do not have permission to use this command."
   player-not-found: "§cPlayer not found."
   console-use: "§cThis command can only be used in-game."
@@ -44,3 +43,20 @@ messages:
   break:
     success: "§aYou successfully broke bedrock and received it."
     not-bedrock: "§cYou must be looking at bedrock."
+
+  tpa:
+    sent: "§aTeleport request sent to §e{player}"
+    received: "§e{player} wants to teleport to you. §a/tpaccept §7or §c/tpdeny"
+    accepted: "§aTeleport request accepted."
+    denied: "§cTeleport request denied."
+    no-request: "§cYou do not have a pending teleport request."
+
+  tpall:
+    success: "§aTeleported all players to you."
+
+  back:
+    success: "§aTeleported back to previous location."
+    no-location: "§cNo previous location saved."
+
+  top:
+    success: "§aTeleported to the highest block above you."
